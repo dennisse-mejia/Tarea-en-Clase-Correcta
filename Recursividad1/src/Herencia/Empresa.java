@@ -59,7 +59,7 @@ public class Empresa {
     }
 
     private static void hire() {
-        System.out.println("Ingrese el tipo de empleado (COMUN, HORA, VENTA, TEMPORAL): ");
+        System.out.print("Ingrese el tipo de empleado (COMUN, HORA, VENTA, TEMPORAL): ");
         String tipoEmpleado = lea.next().toUpperCase();
 
         if (!tipoEmpleado.equals("COMUN") && !tipoEmpleado.equals("HORA") && !tipoEmpleado.equals("VENTA") && !tipoEmpleado.equals("TEMPORAL")) {
@@ -74,9 +74,10 @@ public class Empresa {
             System.out.println("El código ya está en uso.");
             return;
         }
+        lea.nextLine();
 
         System.out.print("Ingrese el nombre del empleado: ");
-        String nombre = lea.next();
+        String nombre = lea.nextLine();
 
         switch (tipoEmpleado) {
             case "COMUN":
@@ -147,10 +148,22 @@ public class Empresa {
         if (empleado != null && empleado instanceof EmpleadoTemporal) {
             System.out.print("Ingrese el año de fin de contrato: ");
             int year = lea.nextInt();
+            if (year < 2024) {
+                System.out.println("Error: el año debe ser 2024 o mayor.");
+                return;
+            }
             System.out.print("Ingrese el mes de fin de contrato: ");
             int month = lea.nextInt();
+            if (month < 1 || month > 12) {
+                System.out.println("Error: el mes debe estar entre 1 y 12.");
+                return;
+            }
             System.out.print("Ingrese el día de fin de contrato: ");
             int day = lea.nextInt();
+            if (day < 1 || day > 31) {
+                System.out.println("Error: el día debe estar entre 1 y 31.");
+                return;
+            }
             Calendar finContrato = Calendar.getInstance();
             finContrato.set(year, month - 1, day);
             ((EmpleadoTemporal) empleado).setFinContrato(finContrato);
@@ -166,7 +179,7 @@ public class Empresa {
         int codigo = lea.nextInt();
         Empleado empleado = search(codigo);
         if (empleado != null && empleado instanceof EmpleadoPorVenta) {
-            System.out.print("Ingrese el monto de la venta: ");
+            System.out.print("Ingrese el monto de la venta: L.");
             double monto = lea.nextDouble();
             ((EmpleadoPorVenta) empleado).agregaVenta(monto);
             System.out.println("Venta registrada.");
